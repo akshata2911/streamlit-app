@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 
-model1=pickle.load(open("D:/Data Science/streamlit/final_rf_model.pkl","rb"))
+model1=pickle.load(open("./final_rf_model.pkl","rb"))
 daily_data_last_7=pd.read_csv('./daily_data_last_7.csv', header=None)
 data=pd.read_csv('./dataset.csv')
 
