@@ -8,38 +8,7 @@ warnings.filterwarnings("ignore")
 
 model1=pickle.load(open("./final_rf_model.pkl","rb"))
 daily_data_last_7=pd.read_csv('./daily_data_last_7.csv', header=None)
-data=pd.read_csv('./dataset.csv',header=0, index_col=0, parse_dates=True)
-st.markdown('''
-<style>
-.stApp {
-    
-    background-color:#8DC8ED;
-    align:center;\
-    display:fill;\
-    border-radius: false;\
-    border-style: solid;\
-    border-color:#000000;\
-    border-style: false;\
-    border-width: 2px;\
-    color:Black;\
-    font-size:15px;\
-    font-family: Source Sans Pro;\
-    background-color:#8DC8ED;\
-    text-align:center;\
-    letter-spacing:0.1px;\
-    padding: 0.1em;">\
-}
-.sidebar {
-    background-color: black;
-}
-.st-b7 {
-    color: #8DC8ED;
-}
-.css-nlntq9 {
-    font-family: Source Sans Pro;
-}
-</style>
-''', unsafe_allow_html=True)
+data=pd.read_csv('./dataset.csv')
 
 st.title("Forecast power consumption data")
 st.sidebar.subheader("Select the number of days to Forecast from 2018-Aug-4")
@@ -63,31 +32,14 @@ future_df['Power Consumption'] = future_pred.tolist()
 
 st.sidebar.write(f"Power consumption for {days}th day")
 st.sidebar.write(future_df[-1:])
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader(f"Power consumptionForecasted for {days} days" )
-    st.write(future_df)
-with col2:
-    st.subheader('Forecasted Graph')
-    fig, ax = plt.subplots()
-    plt.figure(figsize=(8,3))
-    ax.plot(future_df.index,future_df.values, label='Forecast', color="orange")
-    ax.tick_params(axis='x', labelrotation = 100)
-    plt.legend(fontsize=12, fancybox=True, shadow=True, frameon=True)
-    plt.ylabel('Power consumption', fontsize=15)
-    plt.xlabel('Date', fontsize=15)
-    st.pyplot(fig)
-    
-    st.subheader('Actual Vs Forecast plot')
-    fig, ax = plt.subplots()
-    plt.figure(figsize=(8,3))
-    ax.plot(future_df.index,future_df.values, label='Forecast', color="orange")
-    ax.plot(data['Energy'][-365:].index,data['Energy'][-365:].values)
-    ax.tick_params(axis='x', labelrotation = 100)
-    plt.legend(fontsize=5, fancybox=True, shadow=True, frameon=True)
-    plt.ylabel('Power consumption', fontsize=8)
-    plt.xlabel('Date', fontsize=8)
-    st.pyplot(fig)
-   
 
+st.write(f"Power consumptionForecasted till {days}" )
+st.write(future_df)
 
+st.subheader('Actual and Forecast plot')
+fig=plt.figure(figsize=(12,6))
+plt.plot(data[-365:].index,data[-365:].values)
+plt.plot(future_df.index,future_df.values)
+plt.xlabel('Year',fontsize=14)
+plt.ylabel('Power consumption',fontsize=14)
+st.pyplot(fig)
