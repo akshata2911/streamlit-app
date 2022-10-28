@@ -46,7 +46,7 @@ data = pd.read_csv('./dataset_daily.csv', header=0,
 
 st.title("Forecast power consumption data")
 st.sidebar.subheader("Select the number of days to Forecast from 2018-Aug-4")
-days = st.sidebar.number_input('Days',min_value = 1,step = 1)
+days = st.sidebar.number_input('Days',1,31,step = 1)
 
 z=daily_data_last_7
 z=np.array(z[0].tail(7))
