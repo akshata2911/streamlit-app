@@ -57,16 +57,18 @@ for i in range(0, days):
     i = +1
 future_pred = z[-days:]
 
-future = pd.date_range(start='4/8/2018', periods=days, tz=None, freq='D')
+future = pd.date_range(start='8/4/2018', periods=days, tz=None, freq='D')
 future_df = pd.DataFrame(index=future)
 future_df['Power Consumption'] = future_pred.tolist()
 
 st.sidebar.write(f"Power consumption for {days}th day")
 st.sidebar.write(future_df[-1:])
-st.write(f"Power consumption Forecasted till {days}")
+col1, col2 = st.columns(2)
+with col1():
+st.subheader(f"Power consumption Forecasted till {days}")
 st.write(future_df)
 
-with st.container():
+with col2():
     st.subheader('Forecasted Graph')
     fig, ax = plt.subplots()
     plt.figure(figsize=(8, 3))
